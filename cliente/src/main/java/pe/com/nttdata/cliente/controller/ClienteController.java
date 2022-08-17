@@ -37,8 +37,13 @@ public class ClienteController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> registrarCliente(@Valid @RequestBody Cliente cliente) {
         log.info("nuevo registro de cliente {}", cliente);
-        Cliente newcliente = clienteService.registrarCliente(cliente);
-        return new ResponseEntity<ClienteRequest>(new ClienteRequest(newcliente.getId(), cliente.getNombre(), cliente.getApellidoPaterno(), cliente.getApellidoMaterno() , cliente.getEmail(), cliente.getFechaNacimiento()), HttpStatus.OK);
+        Cliente newCliente = clienteService.registrarCliente(cliente);
+        String resultado = clienteService.validarCliente(newCliente);
+        if (resultado.equals("OK")){
+            clienteService.registrarNotificacion(newCliente);
+            return new ResponseEntity<ClienteRequest>(new ClienteRequest(newCliente.getId(), cliente.getNombre(), cliente.getApellidoPaterno(), cliente.getApellidoMaterno() , cliente.getEmail(), cliente.getFechaNacimiento()), HttpStatus.OK);
+        }
+        return new ResponseEntity("Servicio validarCliente no disponible", HttpStatus.OK);
     }
 
     @PutMapping

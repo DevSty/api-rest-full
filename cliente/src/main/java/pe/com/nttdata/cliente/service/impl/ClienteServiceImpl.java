@@ -27,7 +27,7 @@ public class ClienteServiceImpl implements IClienteService {
         return clienteDao.findAll();
     }
 
-    public Cliente registrarCliente(Cliente cliente) {
+   /* public Cliente registrarCliente(Cliente cliente) {
         /*Cliente cliente = Cliente.builder()
                 .nombre(clienteRequest.nombre())
                 .apellidoPaterno(clienteRequest.apellidoPaterno())
@@ -36,12 +36,12 @@ public class ClienteServiceImpl implements IClienteService {
                 .fechaNacimiento(clienteRequest.fechaNacimiento())
                 .build();*/
 
-        Cliente clienteResponse = clienteDao.save(cliente);
+       // Cliente clienteResponse = clienteDao.save(cliente);
        /* ClienteCheckResponse clienteCheckResponse = restTemplate.getForObject(
                 "http://VALIDARCLIENTE/api/v1/cliente-check/{clienteId}"
                 ,ClienteCheckResponse.class,
                 clienteResponse.getId()
-        );*/
+        );
         ClienteCheckResponse clienteCheckResponse = clienteCheckClient.validarCliente(clienteResponse.getId());
 
         if(clienteCheckResponse.esEstafador()){
@@ -59,7 +59,37 @@ public class ClienteServiceImpl implements IClienteService {
                 ,"internal.notification.routing-key");
 
         return clienteResponse;
+    }*/
+
+    public Cliente registrarCliente(Cliente cliente) {
+
+           Cliente clienteResponse = clienteDao.save(cliente);
+
+           return clienteResponse;
     }
+    public String validarCliente(Cliente cliente) {
+        ClienteCheckResponse clienteCheckResponse = clienteCheckClient.validarCliente(cliente.getId());
+
+        if(clienteCheckResponse.esEstafador()){
+            throw new IllegalStateException("El cliente es un estafador");
+        }
+        return "OK";
+    }
+
+    public void registrarNotificacion(Cliente cliente) {
+        NotificacionRequest notificacionRequest = new NotificacionRequest(
+                cliente.getId(),
+                cliente.getEmail(),
+                String.format("Hola %s, bienvenidos a NTTData...",
+                        cliente.getNombre())
+        );
+        rabbitMQMessageProducer.publish(
+                notificacionRequest,
+                "internal.exchange",
+                "internal.notification.routing-key"
+        );
+    }
+
 
     public Cliente modificarCliente(Cliente cliente) {
        /* Cliente cliente = Cliente.builder()

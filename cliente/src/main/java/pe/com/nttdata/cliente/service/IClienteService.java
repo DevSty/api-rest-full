@@ -17,5 +17,6 @@ public interface IClienteService {
     public List<Cliente> listarClientesPorApellidoPaterno(String apellidoPaterno);
     public List<Cliente> listarClientesPorApellidoMaterno(String apellidoMaterno);
     public List<Cliente> listarClientesPorFechaNacimiento(LocalDate fechaNacimiento);
-
+    void registrarNotificacion(Cliente newCliente);
+    String validarCliente(Cliente newCliente);
 }
