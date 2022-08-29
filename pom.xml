@@ -12,6 +12,7 @@
         <module>clientefeign</module>
         <module>clientequeues</module>
         <module>config-server</module>
+        <module>auntenticacion</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
