@@ -56,10 +56,11 @@ public class ClienteController {
         return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
     }
 
-    @DeleteMapping(params = "id")
-    public void eliminarCliente(@RequestParam Integer id) {
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> eliminarCliente(@PathVariable Integer id) {
         log.info("eliminar cliente: "+ id);
-        clienteService.eliminarCliente(id);
+        boolean var = clienteService.deleteById(id);
+        return new ResponseEntity<>(var?HttpStatus.OK:HttpStatus.NOT_FOUND);
     }
 
     @GetMapping(params = "nombre")

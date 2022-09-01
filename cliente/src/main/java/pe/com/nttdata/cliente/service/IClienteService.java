@@ -12,6 +12,7 @@ public interface IClienteService {
     public Cliente registrarCliente(Cliente cliente);
     public Cliente modificarCliente(Cliente cliente);
     public int eliminarCliente(Integer id);
+    public boolean deleteById(Integer id);
     public Cliente obtenerCliente(Integer id);
     public List<Cliente> listarClientesPorNombre(String nombre);
     public List<Cliente> listarClientesPorApellidoPaterno(String apellidoPaterno);

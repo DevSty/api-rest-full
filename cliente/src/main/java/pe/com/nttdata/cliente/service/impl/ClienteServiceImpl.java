@@ -15,6 +15,7 @@ import pe.com.nttdata.clientefeign.validar.cliente.ClienteCheckResponse;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -117,6 +118,13 @@ public class ClienteServiceImpl implements IClienteService {
     public int eliminarCliente(Integer id) {
         clienteDao.deleteById(id);
         return 0;
+    }
+
+    public boolean deleteById(Integer idCliente){
+        Optional<Cliente> cliente = clienteDao.findById(idCliente);
+        if(cliente.isPresent())
+            clienteDao.deleteById(idCliente);
+        return true;
     }
 
     public Cliente obtenerCliente(Integer id) {
