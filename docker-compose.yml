@@ -117,7 +117,7 @@ services:
         - config-server
         - eureka-server
   auntenticacion:
-    image: mrsimonty/auntenticacion/latest
+    image: mrsimonty/auntenticacion:latest
     container_name: auntenticacion
     ports:
       - "8085:8085"
