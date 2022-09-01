@@ -116,9 +116,9 @@ services:
         - rabbitmq
         - config-server
         - eureka-server
-  autenticacion:
-    image: mrsimonty/autenticacion:latest
-    container_name: autenticacion
+  auntenticacion:
+    image: mrsimonty/auntenticacion/latest
+    container_name: auntenticacion
     ports:
       - "8085:8085"
     environment:
