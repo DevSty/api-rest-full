@@ -55,6 +55,7 @@ services:
       - spring
     depends_on:
       - zipkin
+      - config-server
   apigateway:
     image: mrsimonty/apigateway:latest
     container_name: apigateway
@@ -67,6 +68,7 @@ services:
     depends_on:
         - zipkin
         - eureka-server
+        - config-server
   cliente:
     image: mrsimonty/cliente:latest
     container_name: cliente
