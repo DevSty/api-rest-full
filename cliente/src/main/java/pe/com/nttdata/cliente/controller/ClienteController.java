@@ -28,8 +28,8 @@ public class ClienteController {
         return new ResponseEntity<>(clientes, clientes.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(params = "id")
-    public ResponseEntity<?> obtenerCliente(@RequestParam Integer id) {
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<?> obtenerCliente(@PathVariable Integer id) {
         log.info("obtener cliente: "+ id);
         return new ResponseEntity<>(clienteService.obtenerCliente(id), HttpStatus.OK);
     }
@@ -63,31 +63,31 @@ public class ClienteController {
         return new ResponseEntity<>(var?HttpStatus.OK:HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(params = "nombre")
-    public ResponseEntity<?> listarClientesPorNombre(@RequestParam String nombre) {
+    @GetMapping(value = "/nombre/{nombre}")
+    public ResponseEntity<?> listarClientesPorNombre(@PathVariable String nombre) {
         List<Cliente> clientes = clienteService.listarClientesPorNombre(nombre);
         log.info("listar clientes por nombre "+nombre);
         return new ResponseEntity<>(clientes, clientes.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
 
     }
-    @GetMapping(params = "apellidoPaterno")
-    public ResponseEntity<?> listarClientesPorApellidoPaterno(@RequestParam String apellidoPaterno) {
+    @GetMapping(value = "/apellidoP/{apellidoPaterno}")
+    public ResponseEntity<?> listarClientesPorApellidoPaterno(@PathVariable String apellidoPaterno) {
         List<Cliente> clientes = clienteService.listarClientesPorApellidoPaterno(apellidoPaterno);
         log.info("listar clientes por apellido paterno "+ apellidoPaterno);
         return new ResponseEntity<>(clientes, clientes.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
 
     }
 
-    @GetMapping(params = "apellidoMaterno")
-    public ResponseEntity<?> listarClientesPorApellidoMaterno(@RequestParam String apellidoMaterno) {
+    @GetMapping(value = "/apellidoM/{apellidoMaterno}")
+    public ResponseEntity<?> listarClientesPorApellidoMaterno(@PathVariable String apellidoMaterno) {
         List<Cliente> clientes = clienteService.listarClientesPorApellidoMaterno(apellidoMaterno);
         log.info("listar clientes por apellido materno :"+ apellidoMaterno);
         return new ResponseEntity<>(clientes, clientes.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
 
     }
 
-    @GetMapping(params = "fechaNacimiento")
-    public ResponseEntity<?> listarClientesPorFechaNacimiento(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaNacimiento) {
+    @GetMapping(value = "/fecha/{fechaNacimiento}")
+    public ResponseEntity<?> listarClientesPorFechaNacimiento(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaNacimiento) {
         List<Cliente> clientes = clienteService.listarClientesPorFechaNacimiento(fechaNacimiento);
         log.info("listar clientes por fecha de nacimiento "+fechaNacimiento);
         return new ResponseEntity<>(clientes, clientes.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
